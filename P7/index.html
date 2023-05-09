@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <meta charset="utf-8">
+        <title>Les petits plats</title>
+    </head>
+    <body>
+        <header>
+            <div class="header_logo">
+                <img src="/images/lespetitsplats_logo.png" class="logo">
+            </div>
+        </header>
+        <main id="main">
+            <div class="search_bar">
+                <input type="search" id="site-search" value="">
+                <span class="search_icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+            </div>
+            <div class="tag_selected-1"></div>
+            <div class="selection_btn">
+                <div id="ingredientsBtn">
+                    <button type="button" class="ingredients_btn_close">
+                        Ingredients
+                        <span><i class="iconBtn fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <input type="search" id="searchBtnIngredients" name="search" placeholder="Rechercher un ingrédient">
+                    <div class="divBtnIngredients"></div>
+                </div>
+                <div id="appareilsBtn">
+                    <button type="button" class="appareils_btn_close">
+                        Appareils
+                        <span><i class="iconBtn fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <input type="search" id="searchBtnAppareils" name="search" placeholder="Rechercher un appareil">
+                    <div class="divBtnAppareils"></div>
+                </div>
+                <div id="ustensilsBtn">
+                    <button type="button" class="ustensils_btn_close">
+                        Ustensiles
+                        <span><i class="iconBtn fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <input type="search" id="searchBtnUstensils" name="search" placeholder="Rechercher un ustensile">
+                    <div class="divBtnUstensils"></div>
+                </div>
+            </div>
+            <div class="fiches_recipes">
+            </div>
+        </main>
+        <script type="module" src="./index.js"></script>
+        <script src="https://kit.fontawesome.com/0667395aa5.js" crossorigin="anonymous"></script>
+    </body>
+</html>
