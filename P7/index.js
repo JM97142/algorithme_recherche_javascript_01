@@ -7,7 +7,6 @@ import {appareilsFactory} from "/scripts/factories/appareilsFactory.js";
 import {ustensilsFactory} from "/scripts/factories/ustensilsFactory.js";
 
 let searchTerm = '';
-
 let ingredientsSelected = [];
 let ustensilsSelected = [];
 let appareilsSelected = [];
@@ -25,11 +24,10 @@ async function displayRecipes(recipes) {
 }
 
 // FONCTIONNEMENT RECHERCHE
-
-async function isRecipeValidForSearch(recipe) {
-        const recipeName = recipe.name;
+function isRecipeValidForSearch(recipe, searchTerm) {
+        const recipeName = recipe.name.toLowerCase();
         const recipeIngredients = recipe.ingredients;
-        const recipeDescriptions = recipe.description;
+        const recipeDescriptions = recipe.description.toLowerCase();
         // Cas recherche nom
         if (searchTerm.length >= 3) {
             if (recipeName.includes(searchTerm)){
@@ -42,63 +40,112 @@ async function isRecipeValidForSearch(recipe) {
             // Cas recherche ingrédients
             else {
                 for (let j=0; j<recipeIngredients.length; j++) {
-                    const recipeIngredient = recipeIngredients[j].ingredient;
+                    const recipeIngredient = recipeIngredients[j].ingredient.toLowerCase();
                     if (recipeIngredient.includes(searchTerm)) {
                         return true;
                     }
                 }
             }
+            return false;
         }
-        else if (searchTerm.length === 0) {
-            return true;
-        }
-        return false;
+        return true;
 }
 
-async function getRecipesForSearch(recipes) {
+function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
+    let counter = 0;
+
+    for (let j=0; j<recipeIngredients.length; j++) {
+        const recipeIngredient = recipeIngredients[i].ingredient;
+
+        if (ingredientsSelected.includes(recipeIngredient)) {
+            const counter = ingredientsSelected + 1;
+        }
+    }
+    // if (counter === ingredientsSelected.length) {
+    //     return true;
+    // }
+    // return false;
+}
+
+function isRecipeValidForAppareils(recipe, appareilsSelected) {
+    let counter = 0;
+    const recipeAppareil = recipe.appliance;
+
+    if (appareilsSelected.includes(recipeAppareil)) {
+        const counter = appareilsSelected + 1;
+    }
+    if (counter === appareilsSelected.length) {
+        return true;
+    }
+    return false;
+}
+
+function isRecipeValideForUstensils (recipeUstensils, ustensilsSelected) {
+    let counter = 0;
+
+    for (let j=0; j<recipeUstensils.length; j++) {
+        const recipeUstensil = recipeUstensils[j];
+
+        if (ustensilsSelected.includes(recipeUstensil)) {
+            const counter = ustensilsSelected + 1;
+        }
+    }
+    if (counter === ustensilsSelected.length) {
+        return true;
+    }
+    return false;
+}
+
+function getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected) {
 
     let recipeToDisplay = [];
 
     for (let i=0; i<recipes.length; i++) {
         const recipe = recipes[i];
 
-        const isValid = isRecipeValidForSearch(recipe);
-
-        if (isValid === true) {
+        const isValid = isRecipeValidForSearch(recipe, searchTerm);
+        const isIngredientValid = isRecipeValidForIngredients(ingredientsSelected);
+        const isAppareilValid = isRecipeValidForAppareils(appareilsSelected);
+        const isUstensilValid = isRecipeValideForUstensils(ustensilsSelected);
+        
+        if (isValid) {
+            recipeToDisplay.push(recipe);
+        }
+        else if (isIngredientValid || isAppareilValid || isUstensilValid) {
             recipeToDisplay.push(recipe);
         }
     }
     displayRecipes(recipeToDisplay);
 }
 
-async function onInput(event) {
+function onInput(event) {
     searchTerm = event.target.value.toLowerCase();
 
-    getRecipesForSearch(searchTerm);
+    getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
-async function onIngredientsClick(event, ingredient) {
+function onIngredientsClick(event, ingredient) {
     ingredient = event.target.innerHTML.toLowerCase();
 
     ingredientsSelected.push(ingredient);
     
-    getRecipesForSearch(ingredientsSelected);
+    isRecipeValidForIngredients(ingredientsSelected);
 }
 
-async function onUstensilsClick(event, ustensil) {
+function onUstensilsClick(event, ustensil) {
     ustensil = event.target.innerHTML.toLowerCase();
 
     ustensilsSelected.push(ustensil);
 
-    getRecipesForSearch(ustensilsSelected);
+    isRecipeValidForAppareils(appareilsSelected);
 }
 
-async function onAppareilsClick(event, appareil) {
+function onAppareilsClick(event, appareil) {
     appareil = event.target.innerHTML.toLowerCase();
 
     appareilsSelected.push(appareil);
 
-    getRecipesForSearch(appareilsSelected);
+    isRecipeValideForUstensils(ustensilsSelected);
 }
 
 // AFFICHAGE DATA DES BOUTONS DEROULANTS
@@ -212,7 +259,7 @@ async function init() {
     // Affiche les recettes
     displayRecipes(recipes);
     // Fonctionnement recherche
-    getRecipesForSearch(recipes);
+    getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
     // Affiche data des boutons
     displayBtn(recipes);
 }
