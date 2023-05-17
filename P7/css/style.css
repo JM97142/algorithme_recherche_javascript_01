@@ -86,6 +86,26 @@
     background-color: #ED6454;
 }
 
+/* TAGS */
+.tags_selected {
+    display: flex;
+    margin: 20px 100px 0px 100px;
+}
+.tag_ingredients, .tag_appareils, .tag_ustensils {
+    background-color: #3282F7;
+    font-family: "Lato", Arial, sans-serif;
+    text-align: center;
+    margin-right: 10px;
+    color: white;
+    width: auto;
+    padding: 2% 3% 0 3%;
+    height: 37px;
+    border-radius: 5px;
+}
+.nameIngredient {
+    margin-right: 15px;
+}
+
 /* FICHES */
 .fiches_recipes {
     display: flex;

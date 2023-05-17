@@ -5,6 +5,7 @@ import {recipesFactory} from "/scripts/factories/recipes.js";
 import {ingredientsFactory} from "/scripts/factories/ingredientsFactory.js";
 import {appareilsFactory} from "/scripts/factories/appareilsFactory.js";
 import {ustensilsFactory} from "/scripts/factories/ustensilsFactory.js";
+import {tagsIngredientsFactory} from "/scripts/factories/tagsIngredientsFactory.js";
 
 let searchTerm = '';
 let ingredientsSelected = [];
@@ -185,6 +186,10 @@ async function displayBtn(recipes) {
 
                 ingredientsCardDOM.addEventListener('click', function() {
                     onIngredientsClick(event, ingredient);
+
+                    const tagsIngredientsModel = tagsIngredientsFactory(ingredient);
+                    const tagsIngredientsCardDOM = tagsIngredientsModel();
+                    tagsSelected.appendChild(tagsIngredientsCardDOM);
                 });
 
                 const ingredientsBtnOpen = document.querySelector('.ingredients_btn_open');
