@@ -2,7 +2,7 @@ export function appareilsFactory(appareils) {
     const divBtnAppareils = document.querySelector('.divBtnAppareils');
     const btnAppareils = document.querySelector('.btnSearchAppareils');
     const btnAppareilsClose = document.querySelector('.appareils_btn_close');
-
+    // Affichage liste appreils
     function getAppareilsCardDOM() {
         const appareilsBtnOpen = document.createElement('button');
         appareilsBtnOpen.className = 'appareils_btn_open';
@@ -23,7 +23,7 @@ export function appareilsFactory(appareils) {
 
 export function tagsAppareilsFactory(appareils) {
     const tagsSelected = document.querySelector('.tags_selected');
-
+    // Affichage tags appareils
     function getTagsAppareilsCardDom() {
         const tagAppareils = document.createElement('div');
         tagAppareils.className = 'tag_appareils';
@@ -36,6 +36,9 @@ export function tagsAppareilsFactory(appareils) {
         closeTag.className = 'closeTag';
         const closeIcon = document.createElement('i');
         closeTag.className = 'fa-regular fa-circle-xmark';
+        closeTag.addEventListener('click', function() {
+            tagAppareils.remove();
+        });
 
         tagAppareils.appendChild(appareilName);
         closeTag.appendChild(closeIcon);

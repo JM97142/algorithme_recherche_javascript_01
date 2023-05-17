@@ -32,13 +32,59 @@
     right: 7.5rem;
 }
 
-/* TAGS */
+/* TAGS / INPUTS */
+#inputIngredients {
+    border: none;
+    background-color: #3282F7;
+    width: 647px;
+    height: 50px;
+    font-size: 18px;
+}
+#inputAppareils {
+    border: none;
+    background-color: #68D9A4;
+    width: 647px;
+    height: 50px;
+    font-size: 18px;
+}
+#inputUstensils {
+    border: none;    
+    background-color: #ED6454;
+    width: 647px;
+    height: 50px;
+    font-size: 18px;
+}
+#inputIngredients:focus, #inputAppareils:focus, #inputUstensils:focus {
+    outline: none;
+}
 .tags_selected {
     display: flex;
     margin: 20px 100px 0px 100px;
 }
-.tag_ingredients, .tag_appareils, .tag_ustensils {
+.tag_ingredients {
     background-color: #3282F7;
+    font-family: "Lato", Arial, sans-serif;
+    text-align: center;
+    margin-right: 10px;
+    color: white;
+    width: auto;
+    padding: 2% 3% 0 3%;
+    height: 37px;
+    border-radius: 5px;
+}
+.tag_appareils {
+    background-color: #68D9A4;
+    font-family: "Lato", Arial, sans-serif;
+    text-align: center;
+    margin-right: 10px;
+    color: white;
+    width: auto;
+    padding: 2% 3% 0 3%;
+    height: 37px;
+    border-radius: 5px;
+}
+.tag_ustensils {
+    background-color: #ED6454;
     font-family: "Lato", Arial, sans-serif;
     text-align: center;
     margin-right: 10px;
@@ -50,6 +96,7 @@
 }
 .nameIngredient, .nameAppareil, .nameUstensil {
     margin-right: 15px;
+    text-transform: capitalize;
 }
 
 /* BOUTONS */
@@ -74,6 +121,7 @@
 }
 .btnSearchAppareils {
     background-color: #68D9A4;
+    color: white;
     display: none;
     font-family: "Lato", Arial, sans-serif;
     border: none;
@@ -88,6 +136,7 @@
 } 
 .btnSearchUstensils {
     background-color: #ED6454;
+    color: white;
     display: none;
     font-family: "Lato", Arial, sans-serif;
     border: none;
@@ -131,16 +180,16 @@
     height: 50px;
 }
 .ingredients_btn_close, .ingredients_btn_open, .divBtnIngredients {
+    text-transform: capitalize;
     background-color: #3282F7;
 }
 .appareils_btn_close, .appareils_btn_open, .divBtnAppareils {
+    text-transform: capitalize;
     background-color: #68D9A4;
 }
 .ustensils_btn_close, .ustensils_btn_open, .divBtnUstensils {
+    text-transform: capitalize;
     background-color: #ED6454;
-}
-.btnSearchIngredients span, .btnSearchAppareils span, .btnSearchUstensils span {
-    color: #C7BEBE;
 }
 
 /* FICHES */

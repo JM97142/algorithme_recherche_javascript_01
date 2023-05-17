@@ -2,7 +2,7 @@ export function ustensilsFactory(ustensil) {
     const divBtnUstensils = document.querySelector('.divBtnUstensils');
     const btnUstensils = document.querySelector('.btnSearchUstensils');
     const btnUstensilsClose = document.querySelector('.ustensils_btn_close');
-
+    // Affichage liste ustensiles
     function getUstensilsCardDOM() {
         const ustensilsBtnOpen = document.createElement('button');
         ustensilsBtnOpen.className = 'ustensils_btn_open';
@@ -23,7 +23,7 @@ export function ustensilsFactory(ustensil) {
 
 export function tagsUstensilsFactory(ustensil) {
     const tagsSelected = document.querySelector('.tags_selected');
-
+    // Affichage tags ustensiles
     function getTagsUstensilsCardDom() {
         const tagUstensils = document.createElement('div');
         tagUstensils.className = 'tag_ustensils';
@@ -36,6 +36,9 @@ export function tagsUstensilsFactory(ustensil) {
         closeTag.className = 'closeTag';
         const closeIcon = document.createElement('i');
         closeTag.className = 'fa-regular fa-circle-xmark';
+        closeTag.addEventListener('click', function() {
+            tagUstensils.remove();
+        });
 
         tagUstensils.appendChild(ustensilName);
         closeTag.appendChild(closeIcon);

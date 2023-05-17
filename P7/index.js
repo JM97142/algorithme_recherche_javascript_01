@@ -1,7 +1,8 @@
-// Importation des recettes depuis le fichier js
+// DATA RECETTES js
 import {recipes} from "/data/recipes.js";
-import {recipesFactory} from "/scripts/factories/recipes.js";
-//
+
+// FACTORIES
+import {recipesFactory} from "/scripts/factories/recipesFactory.js";
 import {ingredientsFactory} from "/scripts/factories/ingredientsFactory.js";
 import {appareilsFactory} from "/scripts/factories/appareilsFactory.js";
 import {ustensilsFactory} from "/scripts/factories/ustensilsFactory.js";
@@ -14,7 +15,7 @@ let ingredientsSelected = [];
 let ustensilsSelected = [];
 let appareilsSelected = [];
 
-// Importation des ingrédients
+// IMPORTATION DES RECETTES
 async function displayRecipes(recipes) {
     const recipesSection = document.querySelector(".fiches_recipes");
     recipesSection.innerHTML = '';
@@ -53,6 +54,7 @@ function isRecipeValidForSearch(recipe, searchTerm) {
         }
         return true;
 }
+
 // RECHERCHE PAR TAGS
 // Tags ingrédients
 function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
@@ -101,7 +103,7 @@ function isRecipeValideForUstensils(recipeUstensils, ustensilsSelected) {
     return false;
 }
 
-// Fonction recherche principale
+// FONCTION RECHERCHE GLOBALE
 function getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected) {
 
     let recipeToDisplay = [];
@@ -125,12 +127,14 @@ function getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected,
     displayRecipes(recipeToDisplay);
 }
 
+// EVENTS
 function onInput(event) {
     searchTerm = event.target.value.toLowerCase();
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
+// CLICS TAGS
 function onIngredientsClick(event, ingredient) {
     ingredient = event.target.innerHTML.toLowerCase();
 
@@ -151,11 +155,11 @@ function onUstensilsClick(event, ustensil) {
     ustensil = event.target.innerHTML.toLowerCase();
 
     ustensilsSelected.push(ustensil);
-
+    
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
-// AFFICHAGE DATA DES BOUTONS DEROULANTS
+// AFFICHAGE DATA BOUTONS DEROULANTS
 async function displayBtn(recipes) {
     let ingredientToDisplay = [];
     let appareilToDisplay = [];
@@ -170,7 +174,7 @@ async function displayBtn(recipes) {
     const divBtnUstensils = document.querySelector('.divBtnUstensils');
 
     const tagsSelected = document.querySelector('.tags_selected');
-
+    // Affichage ingrédients des recettes
     for (let i=0; i<recipes.length; i++) {
         const ingredients = recipes[i].ingredients;
         for (let j=0; j<ingredients.length; j++) {
@@ -194,7 +198,6 @@ async function displayBtn(recipes) {
                 });
 
                 const ingredientsBtnOpen = document.querySelector('.ingredients_btn_open');
-
                 divBtnIngredients.appendChild(ingredientsBtnOpen);
 
                 const ingredientsBtnClose = document.querySelector('.ingredients_btn_close');
@@ -204,10 +207,17 @@ async function displayBtn(recipes) {
                     divBtnIngredients.style.display = 'flex';
                     ingredientsBtnOpen.style.display = 'block';
                 });
+                const closeListIngredients = document.querySelector('.close-ingredients');
+                closeListIngredients.addEventListener('click', function() {
+                    ingredientsBtnClose.style.display = 'flex';
+                    btnIngredients.style.display = 'none';
+                    divBtnIngredients.style.display = 'none';
+                    ingredientsBtnOpen.style.display = 'none';
+                });
             }
         }
     }
-
+    // Affichage appareils des recettes
     for (let i=0; i<recipes.length; i++) {
         const appareils = recipes[i].appliance.toLowerCase();
         // Supprime les éléments en double
@@ -229,7 +239,6 @@ async function displayBtn(recipes) {
                 });
 
                 const appareilsBtnOpen = document.querySelector('.appareils_btn_open');
-    
                 divBtnAppareils.appendChild(appareilsBtnOpen);
 
                 const btnAppareilsClose = document.querySelector('.appareils_btn_close');
@@ -239,13 +248,20 @@ async function displayBtn(recipes) {
                     divBtnAppareils.style.display = 'flex';
                     appareilsBtnOpen.style.display = 'block';
                 });
+                const closeListAppareils = document.querySelector('.close-appareils');
+                closeListAppareils.addEventListener('click', function() {
+                    btnAppareilsClose.style.display = 'flex';
+                    btnAppareils.style.display = 'none';
+                    divBtnAppareils.style.display = 'none';
+                    appareilsBtnOpen.style.display = 'none';
+                });
             }
     }
-
+    // Affichage ustensiles des recettes
     for (let i=0; i<recipes.length; i++) {
         const ustensils = recipes[i].ustensils;
         for (let j=0; j<ustensils.length; j++) {
-            const ustensil = ustensils[j];
+            const ustensil = ustensils[j].toLowerCase();
             // Supprime les éléments en double
             const findUstensil = ustensilToDisplay.find(ustensilUnique => ustensil === ustensilUnique);
 
@@ -265,7 +281,6 @@ async function displayBtn(recipes) {
                 });
 
                 const ustensilsBtnOpen = document.querySelector('.ustensils_btn_open');
-    
                 divBtnUstensils.appendChild(ustensilsBtnOpen);
                 
                 const btnUstensilsClose = document.querySelector('.ustensils_btn_close');
@@ -274,6 +289,13 @@ async function displayBtn(recipes) {
                     btnUstensils.style.display = 'flex';
                     divBtnUstensils.style.display = 'flex';
                     ustensilsBtnOpen.style.display = 'block';
+                });
+                const closeListUstensils = document.querySelector('.close-ustensils');
+                closeListUstensils.addEventListener('click', function() {
+                    btnUstensilsClose.style.display = 'flex';
+                    btnUstensils.style.display = 'none';
+                    divBtnUstensils.style.display = 'none';
+                    ustensilsBtnOpen.style.display = 'none';
                 });
             }
         }

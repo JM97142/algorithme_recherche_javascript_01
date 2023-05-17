@@ -2,8 +2,7 @@ export function ingredientsFactory(ingredient) {
     const divBtnIngredients = document.querySelector('.divBtnIngredients');
     const ingredientsBtnClose = document.querySelector('.ingredients_btn_close');
     const btnIngredients = document.querySelector('.btnSearchIngredients');
-
-    // Affichage liste des ingrédients
+    // Affichage liste ingrédients
     function getIngredientsCardDOM() {
         const ingredientsBtnOpen = document.createElement('button');
         ingredientsBtnOpen.className = 'ingredients_btn_open';
@@ -25,8 +24,7 @@ export function ingredientsFactory(ingredient) {
 export function tagsIngredientsFactory(ingredient) {
     const tagsSelected = document.querySelector('.tags_selected');
     const recipesSection = document.querySelector(".fiches_recipes");
-
-    // Affichage liste des ingrédients
+    // Affichage tags ingrédients
     function getTagsIngredientsCardDom() {
         const tagIngredients = document.createElement('div');
         tagIngredients.className = 'tag_ingredients';
@@ -38,6 +36,9 @@ export function tagsIngredientsFactory(ingredient) {
         const closeTag = document.createElement('span');
         const closeIcon = document.createElement('i');
         closeTag.className = 'fa-regular fa-circle-xmark';
+        closeTag.addEventListener('click', function() {
+            tagIngredients.remove();
+        });
         
         tagIngredients.appendChild(ingredientName);
         closeTag.appendChild(closeIcon);
