@@ -134,10 +134,10 @@ function onInput(event) {
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
-// CLICS TAGS
+// EVENT TAGS
 function onIngredientsClick(event, ingredient) {
     ingredient = event.target.innerHTML.toLowerCase();
-
+    
     ingredientsSelected.push(ingredient);
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
