@@ -1,6 +1,7 @@
 export function appareilsFactory(appareils) {
     const divBtnAppareils = document.querySelector('.divBtnAppareils');
-    const inputAppareils = document.querySelector('#searchBtnAppareils');
+    const btnAppareils = document.querySelector('.btnSearchAppareils');
+    const btnAppareilsClose = document.querySelector('.appareils_btn_close');
 
     function getAppareilsCardDOM() {
         const appareilsBtnOpen = document.createElement('button');
@@ -8,11 +9,10 @@ export function appareilsFactory(appareils) {
         appareilsBtnOpen.textContent = appareils;
 
         divBtnAppareils.appendChild(appareilsBtnOpen);
-                
-        const btnAppareilsClose = document.querySelector('.appareils_btn_close');
+        
         btnAppareilsClose.addEventListener('click', function() {
             btnAppareilsClose.style.display = 'none';
-            inputAppareils.style.display = 'block';
+            btnAppareils.style.display = 'block';
             divBtnAppareils.style.display = 'flex';
             appareilsBtnOpen.style.display = 'block';
         });
@@ -20,4 +20,30 @@ export function appareilsFactory(appareils) {
     }
     return getAppareilsCardDOM;
 }
-export default appareilsFactory;
+
+export function tagsAppareilsFactory(appareils) {
+    const tagsSelected = document.querySelector('.tags_selected');
+
+    function getTagsAppareilsCardDom() {
+        const tagAppareils = document.createElement('div');
+        tagAppareils.className = 'tag_appareils';
+
+        const appareilName = document.createElement('span');
+        appareilName.className = 'nameAppareil';
+        appareilName.textContent = appareils;
+
+        const closeTag = document.createElement('span');
+        closeTag.className = 'closeTag';
+        const closeIcon = document.createElement('i');
+        closeTag.className = 'fa-regular fa-circle-xmark';
+
+        tagAppareils.appendChild(appareilName);
+        closeTag.appendChild(closeIcon);
+        tagAppareils.appendChild(closeTag);
+        tagsSelected.appendChild(tagAppareils);
+
+        return tagAppareils;
+    }
+    return getTagsAppareilsCardDom;
+}
+export default {appareilsFactory, tagsAppareilsFactory};

@@ -1,6 +1,7 @@
 export function ingredientsFactory(ingredient) {
     const divBtnIngredients = document.querySelector('.divBtnIngredients');
-    const inputIngredients = document.querySelector('#searchBtnIngredients');
+    const ingredientsBtnClose = document.querySelector('.ingredients_btn_close');
+    const btnIngredients = document.querySelector('.btnSearchIngredients');
 
     // Affichage liste des ingrédients
     function getIngredientsCardDOM() {
@@ -10,10 +11,9 @@ export function ingredientsFactory(ingredient) {
         
         divBtnIngredients.appendChild(ingredientsBtnOpen);
         
-        const ingredientsBtnClose = document.querySelector('.ingredients_btn_close');
         ingredientsBtnClose.addEventListener('click', function() {
             ingredientsBtnClose.style.display = 'none';
-            inputIngredients.style.display = 'block';
+            btnIngredients.style.display = 'block';
             divBtnIngredients.style.display = 'flex';
             ingredientsBtnOpen.style.display = 'block';
         });

@@ -6,6 +6,8 @@ import {ingredientsFactory} from "/scripts/factories/ingredientsFactory.js";
 import {appareilsFactory} from "/scripts/factories/appareilsFactory.js";
 import {ustensilsFactory} from "/scripts/factories/ustensilsFactory.js";
 import {tagsIngredientsFactory} from "/scripts/factories/ingredientsFactory.js";
+import {tagsAppareilsFactory} from "./scripts/factories/appareilsFactory.js";
+import {tagsUstensilsFactory} from "./scripts/factories/ustensilsFactory.js";
 
 let searchTerm = '';
 let ingredientsSelected = [];
@@ -80,7 +82,6 @@ function isRecipeValidForAppareils(recipeAppareils, appareilsSelected) {
     if (counter === appareilsSelected.length) {
         return true;
     }
-    console.log(appareilsSelected);
     return false;
 }
 // Tags ustensils
@@ -160,9 +161,9 @@ async function displayBtn(recipes) {
     let appareilToDisplay = [];
     let ustensilToDisplay = [];
 
-    const inputIngredients = document.querySelector('#searchBtnIngredients');
-    const inputAppareils = document.querySelector('#searchBtnAppareils');
-    const inputUstensils = document.querySelector('#searchBtnUstensils');
+    const btnIngredients = document.querySelector('.btnSearchIngredients');
+    const btnAppareils = document.querySelector('.btnSearchAppareils');
+    const btnUstensils = document.querySelector('.btnSearchUstensils');
 
     const divBtnIngredients = document.querySelector('.divBtnIngredients');
     const divBtnAppareils = document.querySelector('.divBtnAppareils');
@@ -199,7 +200,7 @@ async function displayBtn(recipes) {
                 const ingredientsBtnClose = document.querySelector('.ingredients_btn_close');
                 ingredientsBtnClose.addEventListener('click', function() {
                     ingredientsBtnClose.style.display = 'none';
-                    inputIngredients.style.display = 'block';
+                    btnIngredients.style.display = 'flex';
                     divBtnIngredients.style.display = 'flex';
                     ingredientsBtnOpen.style.display = 'block';
                 });
@@ -221,6 +222,10 @@ async function displayBtn(recipes) {
 
                 appareilsCardDOM.addEventListener('click', function() {
                     onAppareilsClick(event, appareils);
+                    
+                    const tagAppareilsModel = tagsAppareilsFactory(appareils);
+                    const tagsAppareilsCardDOM = tagAppareilsModel();
+                    tagsSelected.appendChild(tagsAppareilsCardDOM);
                 });
 
                 const appareilsBtnOpen = document.querySelector('.appareils_btn_open');
@@ -230,7 +235,7 @@ async function displayBtn(recipes) {
                 const btnAppareilsClose = document.querySelector('.appareils_btn_close');
                 btnAppareilsClose.addEventListener('click', function() {
                     btnAppareilsClose.style.display = 'none';
-                    inputAppareils.style.display = 'block';
+                    btnAppareils.style.display = 'flex';
                     divBtnAppareils.style.display = 'flex';
                     appareilsBtnOpen.style.display = 'block';
                 });
@@ -240,7 +245,7 @@ async function displayBtn(recipes) {
     for (let i=0; i<recipes.length; i++) {
         const ustensils = recipes[i].ustensils;
         for (let j=0; j<ustensils.length; j++) {
-            const ustensil = ustensils[j].toLowerCase();
+            const ustensil = ustensils[j];
             // Supprime les éléments en double
             const findUstensil = ustensilToDisplay.find(ustensilUnique => ustensil === ustensilUnique);
 
@@ -253,6 +258,10 @@ async function displayBtn(recipes) {
 
                 ustensilsCardDOM.addEventListener('click', function() {
                     onUstensilsClick(event, ustensil);
+
+                    const tagsUstensilsModel = tagsUstensilsFactory(ustensil);
+                    const tagsUstensilsCardDOM = tagsUstensilsModel();
+                    tagsSelected.appendChild(tagsUstensilsCardDOM);
                 });
 
                 const ustensilsBtnOpen = document.querySelector('.ustensils_btn_open');
@@ -262,7 +271,7 @@ async function displayBtn(recipes) {
                 const btnUstensilsClose = document.querySelector('.ustensils_btn_close');
                 btnUstensilsClose.addEventListener('click', function() {
                     btnUstensilsClose.style.display = 'none';
-                    inputUstensils.style.display = 'block';
+                    btnUstensils.style.display = 'flex';
                     divBtnUstensils.style.display = 'flex';
                     ustensilsBtnOpen.style.display = 'block';
                 });
