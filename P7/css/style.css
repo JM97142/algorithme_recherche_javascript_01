@@ -63,7 +63,7 @@
 }
 .selection_btn {
     display: flex;
-    margin: 77px 100px 25px 100px;
+    margin: 25px 100px 25px 100px;
 }
 .appareils_btn_close, .ingredients_btn_close, .ustensils_btn_close {
     cursor: pointer;

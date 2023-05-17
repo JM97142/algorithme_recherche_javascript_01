@@ -23,7 +23,7 @@ async function displayRecipes(recipes) {
     });
 }
 
-// FONCTIONNEMENT RECHERCHE
+// FONCTIONNEMENT BARRE DE RECHERCHE
 function isRecipeValidForSearch(recipe, searchTerm) {
         const recipeName = recipe.name.toLowerCase();
         const recipeIngredients = recipe.ingredients;
@@ -50,44 +50,47 @@ function isRecipeValidForSearch(recipe, searchTerm) {
         }
         return true;
 }
-
+// RECHERCHE PAR TAGS
+// Tags ingrédients
 function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
     let counter = 0;
 
     for (let j=0; j<recipeIngredients.length; j++) {
-        const recipeIngredient = recipeIngredients[i].ingredient;
+        const recipeIngredient = recipeIngredients[j].ingredient.toLowerCase();
 
         if (ingredientsSelected.includes(recipeIngredient)) {
-            const counter = ingredientsSelected + 1;
+            counter = counter + 1;
         }
     }
-    // if (counter === ingredientsSelected.length) {
-    //     return true;
-    // }
-    // return false;
-}
-
-function isRecipeValidForAppareils(recipe, appareilsSelected) {
-    let counter = 0;
-    const recipeAppareil = recipe.appliance;
-
-    if (appareilsSelected.includes(recipeAppareil)) {
-        const counter = appareilsSelected + 1;
-    }
-    if (counter === appareilsSelected.length) {
+    if (counter === ingredientsSelected.length) {
         return true;
     }
     return false;
 }
-
-function isRecipeValideForUstensils (recipeUstensils, ustensilsSelected) {
+// Tags Appareils
+function isRecipeValidForAppareils(recipeAppareils, appareilsSelected) {
+    let counter = 0;
+    
+    const recipeAppareil = recipeAppareils.toLowerCase();
+    
+    if (appareilsSelected.includes(recipeAppareil)) {
+        counter = counter + 1;
+    }
+    if (counter === appareilsSelected.length) {
+        return true;
+    }
+    console.log(appareilsSelected);
+    return false;
+}
+// Tags ustensils
+function isRecipeValideForUstensils(recipeUstensils, ustensilsSelected) {
     let counter = 0;
 
     for (let j=0; j<recipeUstensils.length; j++) {
-        const recipeUstensil = recipeUstensils[j];
+        const recipeUstensil = recipeUstensils[j].toLowerCase();
 
         if (ustensilsSelected.includes(recipeUstensil)) {
-            const counter = ustensilsSelected + 1;
+            counter = counter + 1;
         }
     }
     if (counter === ustensilsSelected.length) {
@@ -96,25 +99,27 @@ function isRecipeValideForUstensils (recipeUstensils, ustensilsSelected) {
     return false;
 }
 
+// Fonction recherche principale
 function getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected) {
 
     let recipeToDisplay = [];
 
     for (let i=0; i<recipes.length; i++) {
         const recipe = recipes[i];
+        const recipeIngredients = recipe.ingredients;
+        const recipeAppareils = recipe.appliance;
+        const recipeUstensils = recipe.ustensils;
 
         const isValid = isRecipeValidForSearch(recipe, searchTerm);
-        const isIngredientValid = isRecipeValidForIngredients(ingredientsSelected);
-        const isAppareilValid = isRecipeValidForAppareils(appareilsSelected);
-        const isUstensilValid = isRecipeValideForUstensils(ustensilsSelected);
+        const isIngredientValid = isRecipeValidForIngredients(recipeIngredients, ingredientsSelected);
+        const isAppareilValid = isRecipeValidForAppareils(recipeAppareils, appareilsSelected);
+        const isUstensilValid = isRecipeValideForUstensils(recipeUstensils, ustensilsSelected);
         
-        if (isValid) {
-            recipeToDisplay.push(recipe);
-        }
-        else if (isIngredientValid || isAppareilValid || isUstensilValid) {
+        if (isValid && isIngredientValid && isAppareilValid && isUstensilValid) {
             recipeToDisplay.push(recipe);
         }
     }
+    console.log('recipe', recipeToDisplay);
     displayRecipes(recipeToDisplay);
 }
 
@@ -128,16 +133,8 @@ function onIngredientsClick(event, ingredient) {
     ingredient = event.target.innerHTML.toLowerCase();
 
     ingredientsSelected.push(ingredient);
-    
-    isRecipeValidForIngredients(ingredientsSelected);
-}
 
-function onUstensilsClick(event, ustensil) {
-    ustensil = event.target.innerHTML.toLowerCase();
-
-    ustensilsSelected.push(ustensil);
-
-    isRecipeValidForAppareils(appareilsSelected);
+    getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
 function onAppareilsClick(event, appareil) {
@@ -145,7 +142,15 @@ function onAppareilsClick(event, appareil) {
 
     appareilsSelected.push(appareil);
 
-    isRecipeValideForUstensils(ustensilsSelected);
+    getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
+}
+
+function onUstensilsClick(event, ustensil) {
+    ustensil = event.target.innerHTML.toLowerCase();
+
+    ustensilsSelected.push(ustensil);
+
+    getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
 // AFFICHAGE DATA DES BOUTONS DEROULANTS
@@ -159,9 +164,10 @@ async function displayBtn(recipes) {
     const inputUstensils = document.querySelector('#searchBtnUstensils');
 
     const divBtnIngredients = document.querySelector('.divBtnIngredients');
-    divBtnIngredients.innerHTML = '';
     const divBtnAppareils = document.querySelector('.divBtnAppareils');
     const divBtnUstensils = document.querySelector('.divBtnUstensils');
+
+    const tagsSelected = document.querySelector('.tags_selected');
 
     for (let i=0; i<recipes.length; i++) {
         const ingredients = recipes[i].ingredients;
@@ -177,7 +183,9 @@ async function displayBtn(recipes) {
                 const ingredientsCardDOM = ingredientsModel();
                 divBtnIngredients.appendChild(ingredientsCardDOM);
 
-                ingredientsCardDOM.addEventListener('click', onIngredientsClick);
+                ingredientsCardDOM.addEventListener('click', function() {
+                    onIngredientsClick(event, ingredient);
+                });
 
                 const ingredientsBtnOpen = document.querySelector('.ingredients_btn_open');
 
@@ -195,7 +203,7 @@ async function displayBtn(recipes) {
     }
 
     for (let i=0; i<recipes.length; i++) {
-        const appareils = recipes[i].appliance;
+        const appareils = recipes[i].appliance.toLowerCase();
         // Supprime les éléments en double
         const findAppareil = appareilToDisplay.find(appareilUnique => appareils === appareilUnique);
 
@@ -206,7 +214,9 @@ async function displayBtn(recipes) {
                 const appareilsCardDOM = appareilsModel();
                 divBtnAppareils.appendChild(appareilsCardDOM);
 
-                appareilsCardDOM.addEventListener('click', onAppareilsClick);
+                appareilsCardDOM.addEventListener('click', function() {
+                    onAppareilsClick(event, appareils);
+                });
 
                 const appareilsBtnOpen = document.querySelector('.appareils_btn_open');
     
@@ -225,7 +235,7 @@ async function displayBtn(recipes) {
     for (let i=0; i<recipes.length; i++) {
         const ustensils = recipes[i].ustensils;
         for (let j=0; j<ustensils.length; j++) {
-            const ustensil = ustensils[j];
+            const ustensil = ustensils[j].toLowerCase();
             // Supprime les éléments en double
             const findUstensil = ustensilToDisplay.find(ustensilUnique => ustensil === ustensilUnique);
 
@@ -236,7 +246,9 @@ async function displayBtn(recipes) {
                 const ustensilsCardDOM = ustensilsModel();
                 divBtnAppareils.appendChild(ustensilsCardDOM);
 
-                ustensilsCardDOM.addEventListener('click', onUstensilsClick);
+                ustensilsCardDOM.addEventListener('click', function() {
+                    onUstensilsClick(event, ustensil);
+                });
 
                 const ustensilsBtnOpen = document.querySelector('.ustensils_btn_open');
     
@@ -269,12 +281,3 @@ init();
 // EVENT LISTERNER
 const searchBar = document.querySelector("#site-search");
 searchBar.addEventListener('input', onInput);
-
-// const inputIngredients = document.querySelector('#searchBtnIngredients');
-// inputIngredients.addEventListener('input', onIngredientsClick);
-
-// const inputAppareils = document.querySelector('#searchBtnAppareils');
-// inputAppareils.addEventListener('input', onAppareilsClick);
-
-// const inputUstensils = document.querySelector('#searchBtnUstensils');
-// inputUstensils.addEventListener('input', onUstensilsClick);

@@ -5,7 +5,7 @@ export function ingredientsFactory(ingredient) {
     // Affichage liste des ingrédients
     function getIngredientsCardDOM() {
         const ingredientsBtnOpen = document.createElement('button');
-        ingredientsBtnOpen.className = 'ingredients_btn_open index-';
+        ingredientsBtnOpen.className = 'ingredients_btn_open';
         ingredientsBtnOpen.textContent = ingredient.ingredient;
         
         divBtnIngredients.appendChild(ingredientsBtnOpen);
@@ -22,4 +22,3 @@ export function ingredientsFactory(ingredient) {
     return getIngredientsCardDOM;
 }
 export default ingredientsFactory;
-
