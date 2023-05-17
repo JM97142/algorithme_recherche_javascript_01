@@ -5,7 +5,7 @@ import {recipesFactory} from "/scripts/factories/recipes.js";
 import {ingredientsFactory} from "/scripts/factories/ingredientsFactory.js";
 import {appareilsFactory} from "/scripts/factories/appareilsFactory.js";
 import {ustensilsFactory} from "/scripts/factories/ustensilsFactory.js";
-import {tagsIngredientsFactory} from "/scripts/factories/tagsIngredientsFactory.js";
+import {tagsIngredientsFactory} from "/scripts/factories/ingredientsFactory.js";
 
 let searchTerm = '';
 let ingredientsSelected = [];
