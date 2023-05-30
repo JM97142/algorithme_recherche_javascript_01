@@ -10,12 +10,6 @@ export function appareilsFactory(appareils) {
 
         divBtnAppareils.appendChild(appareilsBtnOpen);
         
-        btnAppareilsClose.addEventListener('click', function() {
-            btnAppareilsClose.style.display = 'none';
-            btnAppareils.style.display = 'block';
-            divBtnAppareils.style.display = 'flex';
-            appareilsBtnOpen.style.display = 'block';
-        });
         return appareilsBtnOpen;
     }
     return getAppareilsCardDOM;

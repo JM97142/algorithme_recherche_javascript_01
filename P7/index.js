@@ -55,6 +55,22 @@ function isRecipeValidForSearch(recipe, searchTerm) {
         return true;
 }
 
+// FONCTIONNEMENT TAGS
+function isTagIngredientValidForSearch(recipeIngredients, searchTerm) {
+    // Cas recherche nom
+    if (searchTerm.length >= 3) {
+        for (let j=0; j<recipeIngredients.length; j++) {
+            const recipeIngredient = recipeIngredients[j].ingredient.toLowerCase();
+            if (recipeIngredient.includes(searchTerm)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return true;
+
+}
+
 // RECHERCHE PAR TAGS
 // Tags ingrédients
 function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
@@ -126,6 +142,22 @@ function getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected,
     console.log('recipe', recipeToDisplay);
     displayRecipes(recipeToDisplay);
 }
+// FONCTION RECHERCHE TAGS
+function getTagForSearch(searchTerm) {
+    let ingredientToDisplay = [];
+
+    for  (let i=0; i<recipes.length; i++) {
+        const recipe = recipes[i];
+        const recipeIngredients = recipe.ingredients
+
+        const isIngredientValid = isTagIngredientValidForSearch(recipeIngredients, searchTerm);
+
+        if (isIngredientValid) {
+            ingredientToDisplay.push(recipeIngredients);
+        }
+    }
+    displayBtn(ingredientToDisplay);
+}
 
 // EVENTS
 function onInput(event) {
@@ -133,13 +165,17 @@ function onInput(event) {
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
+function onTag(event) {
+    searchTerm = event.target.value.toLowerCase();
 
-// EVENT TAGS
+    getTagForSearch(searchTerm);
+}
+// CLICS TAGS
 function onIngredientsClick(event, ingredient) {
     ingredient = event.target.innerHTML.toLowerCase();
     
     ingredientsSelected.push(ingredient);
-
+    
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
@@ -147,7 +183,7 @@ function onAppareilsClick(event, appareil) {
     appareil = event.target.innerHTML.toLowerCase();
 
     appareilsSelected.push(appareil);
-
+    
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 
@@ -180,7 +216,9 @@ async function displayBtn(recipes) {
         for (let j=0; j<ingredients.length; j++) {
             const ingredient = ingredients[j];
             // Supprime les éléments en double
-            const findIngredient = ingredientToDisplay.find(ingredientUnique => ingredient === ingredientUnique);
+            const findIngredient = ingredientToDisplay.find(
+                ingredientUnique => ingredient.ingredient.toLowerCase() === ingredientUnique.ingredient.toLowerCase()
+            );
 
             if (findIngredient === undefined) {
                 ingredientToDisplay.push(ingredient);
@@ -195,6 +233,10 @@ async function displayBtn(recipes) {
                     const tagsIngredientsModel = tagsIngredientsFactory(ingredient);
                     const tagsIngredientsCardDOM = tagsIngredientsModel();
                     tagsSelected.appendChild(tagsIngredientsCardDOM);
+
+                    tagsIngredientsCardDOM.addEventListener('click', function() {
+                        tagsIngredientsCardDOM.remove();
+                    })
                 });
 
                 const ingredientsBtnOpen = document.querySelector('.ingredients_btn_open');
@@ -205,7 +247,7 @@ async function displayBtn(recipes) {
                     ingredientsBtnClose.style.display = 'none';
                     btnIngredients.style.display = 'flex';
                     divBtnIngredients.style.display = 'flex';
-                    ingredientsBtnOpen.style.display = 'block';
+                    ingredientsBtnOpen.style.display = 'flex';
                 });
                 const closeListIngredients = document.querySelector('.close-ingredients');
                 closeListIngredients.addEventListener('click', function() {
@@ -219,23 +261,35 @@ async function displayBtn(recipes) {
     }
     // Affichage appareils des recettes
     for (let i=0; i<recipes.length; i++) {
-        const appareils = recipes[i].appliance.toLowerCase();
+        const appareil = recipes[i].appliance.toLowerCase();
         // Supprime les éléments en double
-        const findAppareil = appareilToDisplay.find(appareilUnique => appareils === appareilUnique);
+        const findAppareil = appareilToDisplay.find(appareilUnique => appareil === appareilUnique);
 
             if (findAppareil === undefined) {
-                appareilToDisplay.push(appareils);
+                appareilToDisplay.push(appareil);
 
-                const appareilsModel = appareilsFactory(appareils);
+                const appareilsModel = appareilsFactory(appareil);
                 const appareilsCardDOM = appareilsModel();
                 divBtnAppareils.appendChild(appareilsCardDOM);
 
                 appareilsCardDOM.addEventListener('click', function() {
-                    onAppareilsClick(event, appareils);
+                    onAppareilsClick(event, appareil);
                     
-                    const tagAppareilsModel = tagsAppareilsFactory(appareils);
+                    const tagAppareilsModel = tagsAppareilsFactory(appareil);
                     const tagsAppareilsCardDOM = tagAppareilsModel();
                     tagsSelected.appendChild(tagsAppareilsCardDOM);
+
+                    const findTag = appareilToDisplay.filter(appareilUnique => appareil === appareilUnique);
+                    console.log(findTag)
+
+                    if (findTag === false) {
+                        appareilToDisplay.push(appareil);
+                        console.log(appareilToDisplay);
+                    }
+                    
+                    tagsAppareilsCardDOM.addEventListener('click', function() {
+                        tagsAppareilsCardDOM.remove();
+                    });
                 });
 
                 const appareilsBtnOpen = document.querySelector('.appareils_btn_open');
@@ -246,7 +300,7 @@ async function displayBtn(recipes) {
                     btnAppareilsClose.style.display = 'none';
                     btnAppareils.style.display = 'flex';
                     divBtnAppareils.style.display = 'flex';
-                    appareilsBtnOpen.style.display = 'block';
+                    appareilsBtnOpen.style.display = 'flex';
                 });
                 const closeListAppareils = document.querySelector('.close-appareils');
                 closeListAppareils.addEventListener('click', function() {
@@ -278,6 +332,10 @@ async function displayBtn(recipes) {
                     const tagsUstensilsModel = tagsUstensilsFactory(ustensil);
                     const tagsUstensilsCardDOM = tagsUstensilsModel();
                     tagsSelected.appendChild(tagsUstensilsCardDOM);
+
+                    tagsUstensilsCardDOM.addEventListener('click', function() {
+                        tagsUstensilsCardDOM.remove();
+                    })
                 });
 
                 const ustensilsBtnOpen = document.querySelector('.ustensils_btn_open');
@@ -288,7 +346,7 @@ async function displayBtn(recipes) {
                     btnUstensilsClose.style.display = 'none';
                     btnUstensils.style.display = 'flex';
                     divBtnUstensils.style.display = 'flex';
-                    ustensilsBtnOpen.style.display = 'block';
+                    ustensilsBtnOpen.style.display = 'flex';
                 });
                 const closeListUstensils = document.querySelector('.close-ustensils');
                 closeListUstensils.addEventListener('click', function() {
@@ -317,3 +375,6 @@ init();
 // EVENT LISTERNER
 const searchBar = document.querySelector("#site-search");
 searchBar.addEventListener('input', onInput);
+
+const inputIngredients = document.querySelector('#inputIngredients');
+inputIngredients.addEventListener('input', onTag);

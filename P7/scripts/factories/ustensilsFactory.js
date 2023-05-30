@@ -1,7 +1,5 @@
 export function ustensilsFactory(ustensil) {
     const divBtnUstensils = document.querySelector('.divBtnUstensils');
-    const btnUstensils = document.querySelector('.btnSearchUstensils');
-    const btnUstensilsClose = document.querySelector('.ustensils_btn_close');
     // Affichage liste ustensiles
     function getUstensilsCardDOM() {
         const ustensilsBtnOpen = document.createElement('button');
@@ -10,12 +8,6 @@ export function ustensilsFactory(ustensil) {
         
         divBtnUstensils.appendChild(ustensilsBtnOpen);
         
-        btnUstensilsClose.addEventListener('click', function() {
-            btnUstensilsClose.style.display = 'none';
-            btnUstensils.style.display = 'block';
-            divBtnUstensils.style.display = 'flex';
-            ustensilsBtnOpen.style.display = 'block';
-        });
         return ustensilsBtnOpen;
     }
     return getUstensilsCardDOM;

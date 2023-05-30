@@ -36,7 +36,7 @@
 #inputIngredients {
     border: none;
     background-color: #3282F7;
-    width: 647px;
+    width: 800px;
     height: 50px;
     font-size: 18px;
 }
@@ -107,12 +107,12 @@
 .btnSearchIngredients {
     border: none;
     background-color: #3282F7;
+    justify-content: space-between;
     color: white;
     display: none;
     font-family: "Lato", Arial, sans-serif;
     line-height: 21.6px;
     border-radius: 5px 5px 0px 0px;
-    width: 647px;
     height: 50px;
     font-size: 18px;
     padding: 10px;
@@ -127,7 +127,7 @@
     border: none;
     line-height: 21.6px;
     border-radius: 5px 5px 0px 0px;
-    width: 647px;
+    width: auto;
     height: 50px;
     font-size: 18px;
     padding: 10px;
@@ -139,7 +139,7 @@
     color: white;
     display: none;
     font-family: "Lato", Arial, sans-serif;
-    border: none;
+    border: auto;
     line-height: 21.6px;
     border-radius: 5px 5px 0px 0px;
     width: 647px;
@@ -152,7 +152,7 @@
 .divBtnIngredients, .divBtnAppareils, .divBtnUstensils {
     display: none;
     flex-wrap: wrap;
-    width: 667px;
+    flex-direction: column;
     height: 397px;
     margin-right: 20px;
     border-radius: 0px 0px 5px 5px;
@@ -160,7 +160,6 @@
 .ingredients_btn_open, .ustensils_btn_open, .appareils_btn_open {
     font-family: "Lato", Arial, sans-serif;
     display: none;
-    width: auto;
     border: none;
     height: 22px;
     color: white;
