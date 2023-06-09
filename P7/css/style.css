@@ -159,7 +159,6 @@
 }
 .ingredients_btn_open, .ustensils_btn_open, .appareils_btn_open {
     font-family: "Lato", Arial, sans-serif;
-    display: none;
     border: none;
     height: 22px;
     color: white;

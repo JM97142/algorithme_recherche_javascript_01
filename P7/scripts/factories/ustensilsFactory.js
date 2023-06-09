@@ -19,6 +19,7 @@ export function tagsUstensilsFactory(ustensil) {
     function getTagsUstensilsCardDom() {
         const tagUstensils = document.createElement('div');
         tagUstensils.className = 'tag_ustensils';
+        tagUstensils.id = ustensil;
 
         const ustensilName = document.createElement('span');
         ustensilName.className = 'nameUstensil';
@@ -28,9 +29,6 @@ export function tagsUstensilsFactory(ustensil) {
         closeTag.className = 'closeTag';
         const closeIcon = document.createElement('i');
         closeTag.className = 'fa-regular fa-circle-xmark';
-        closeTag.addEventListener('click', function() {
-            tagUstensils.remove();
-        });
 
         tagUstensils.appendChild(ustensilName);
         closeTag.appendChild(closeIcon);

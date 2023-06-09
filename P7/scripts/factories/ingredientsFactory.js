@@ -15,11 +15,11 @@ export function ingredientsFactory(ingredient) {
 
 export function tagsIngredientsFactory(ingredient) {
     const tagsSelected = document.querySelector('.tags_selected');
-    const recipesSection = document.querySelector(".fiches_recipes");
     // Affichage tags ingrédients
     function getTagsIngredientsCardDom() {
         const tagIngredients = document.createElement('div');
         tagIngredients.className = 'tag_ingredients';
+        tagIngredients.id = ingredient.ingredient;
 
         const ingredientName = document.createElement('span');
         ingredientName.className = 'nameIngredient';
