@@ -135,19 +135,48 @@ function onInput(event) {
 }
 function onSearchIngredient(event) {
     const ingredientsToDisplay = [];
-    searchTerm = event.target.value.toLowerCase();
+    const searchTermIngredients = event.target.value.toLowerCase();
 
     const ingredientsDisplayed = getIngredientsForRecipes(recipesDisplayed);
 
     for (let i=0; i<ingredientsDisplayed.length; i++) {
         const ingredient = ingredientsDisplayed[i];
-        if (ingredient.includes(searchTerm)) {
+        const ingredientName = ingredient.ingredient.toLowerCase();
+        
+        if (ingredientName.includes(searchTermIngredients)) {
             ingredientsToDisplay.push(ingredient);
         }
     }
     displayIngredients(ingredientsToDisplay);
+}
+function onSearchAppareil(event) {
+    const appareilsToDisplay = [];
+    const searchTermAppareils = event.target.value.toLowerCase();
 
-    
+    const appareilsDisplayed = getAppareilsForRecipes(recipesDisplayed);
+    for (let i=0; i<appareilsDisplayed.length; i++) {
+        const appareil = appareilsDisplayed[i].toLowerCase();
+        
+        if (appareil.includes(searchTermAppareils)) {
+            appareilsToDisplay.push(appareil);
+        }
+    }
+    displayAppareils(appareilsToDisplay);
+}
+function onSearchUstensil(event) {
+    const ustensilsToDisplay = [];
+    const searchTermUstensils = event.target.value.toLowerCase();
+
+    const ustensilsDisplayed = getUstensilsForRecipes(recipesDisplayed);
+
+    for (let i=0; i<ustensilsDisplayed.length; i++) {
+        const ustensil = ustensilsDisplayed[i].toLowerCase();
+        console.log(ustensil);
+        if (ustensil.includes(searchTermUstensils)) {
+            ustensilsToDisplay.push(ustensil);
+        }
+    }
+    displayUstensils(ustensilsToDisplay);
 }
 // CREATION/FONCTIONNEMENT TAGS
 // Tags ingredients
@@ -158,8 +187,9 @@ function createIngredientTag(ingredient) {
     const tagsIngredientsCardDOM = tagsIngredientsModel();
     tagsSelected.appendChild(tagsIngredientsCardDOM);
 
-    tagsIngredientsCardDOM.addEventListener('click', (event) => onRemoveIngredientTag(event, ingredient.ingredient));
+    tagsIngredientsCardDOM.addEventListener('click', () => onRemoveIngredientTag(ingredient.ingredient));
 }
+
 function onRemoveIngredientTag(ingredientName) {
     ingredientsSelected = ingredientsSelected.filter(ingredientSelected => ingredientSelected !== ingredientName);
 
@@ -168,6 +198,7 @@ function onRemoveIngredientTag(ingredientName) {
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
+
 function onIngredientsClick(event, ingredient) {
     ingredientsSelected.push(ingredient.ingredient.toLowerCase());
     
@@ -189,6 +220,9 @@ function createIngredientInDropdown(ingredient) {
     divBtnIngredients.appendChild(ingredientsBtnOpen);
 }
 function displayIngredients(ingredients) {
+    const divBtnIngredients = document.querySelector('.divBtnIngredients');
+    divBtnIngredients.innerHTML = '';
+
     for (let i=0; i<ingredients.length; i++) {
         const ingredient = ingredients[i];
         createIngredientInDropdown(ingredient);
@@ -202,12 +236,12 @@ function createAppareilTag(appareil) {
     const tagsAppareilsCardDOM = tagAppareilsModel();
     tagsSelected.appendChild(tagsAppareilsCardDOM);
     
-    tagsAppareilsCardDOM.addEventListener('click', (event) => onRemoveAppareilTag(event, appareil));
+    tagsAppareilsCardDOM.addEventListener('click', () => onRemoveAppareilTag(appareil));
 }
 function onRemoveAppareilTag(appareilName) {
     appareilsSelected = appareilsSelected.filter(appareilSelected => appareilSelected !== appareilName);
 
-    const tag = document.getElementBy(appareilName);
+    const tag = document.getElementById(appareilName);
     tag.remove();
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
@@ -233,6 +267,9 @@ function createAppareilInDropdown(appareil) {
     divBtnAppareils.appendChild(appareilsBtnOpen);
 }
 function displayAppareils(appliance) {
+    const divBtnAppareils = document.querySelector('.divBtnAppareils');
+    divBtnAppareils.innerHTML = '';
+
     for (let i=0; i<appliance.length; i++) {
         const appareil = appliance[i];
         createAppareilInDropdown(appareil);
@@ -246,12 +283,12 @@ function createUstensilTag(ustensil) {
     const tagsUstensilsCardDOM = tagsUstensilsModel();
     tagsSelected.appendChild(tagsUstensilsCardDOM);
 
-    tagsUstensilsCardDOM.addEventListener('click', (event) => onRemoveUstensilTag(event, ustensil));
+    tagsUstensilsCardDOM.addEventListener('click', () => onRemoveUstensilTag(ustensil));
 }
-function onRemoveUstensilTag(ustensil) {
-    ustensilsSelected = ustensilsSelected.filter(ustensilSelected => ustensilSelected !== ustensil);
+function onRemoveUstensilTag(ustensilName) {
+    ustensilsSelected = ustensilsSelected.filter(ustensilSelected => ustensilSelected !== ustensilName);
 
-    const tag = document.getElementById(ustensil);
+    const tag = document.getElementById(ustensilName);
     tag.remove();
 
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
@@ -277,6 +314,9 @@ function createUstensilInDropdown(ustensil) {
     divBtnUstensils.appendChild(ustensilsBtnOpen);
 }
 function displayUstensils(ustensils) {
+    const divBtnUstensils = document.querySelector('.divBtnUstensils');
+    divBtnUstensils.innerHTML = '';
+
     for (let i=0; i<ustensils.length; i++) {
         const ustensil = ustensils[i];
         createUstensilInDropdown(ustensil);
@@ -425,3 +465,9 @@ searchBar.addEventListener('input', onInput);
 
 const inputIngredients = document.querySelector('#inputIngredients');
 inputIngredients.addEventListener('input', onSearchIngredient);
+
+const inputAppareils = document.querySelector('#inputAppareils');
+inputAppareils.addEventListener('input', onSearchAppareil);
+
+const inputUstensils = document.querySelector('#inputUstensils');
+inputUstensils.addEventListener('input', onSearchUstensil);
