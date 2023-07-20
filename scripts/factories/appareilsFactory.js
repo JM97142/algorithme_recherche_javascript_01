@@ -1,14 +1,14 @@
 export function appareilsFactory(appareils) {
-    const divBtnAppareils = document.querySelector('.divBtnAppareils');
+    const appareilsContenair = document.querySelector('.appareils_contenair');
     // Affichage liste appreils
     function getAppareilsCardDOM() {
-        const appareilsBtnOpen = document.createElement('button');
-        appareilsBtnOpen.className = 'appareils_btn_open';
-        appareilsBtnOpen.textContent = appareils;
+        const listAppareils = document.createElement('button');
+        listAppareils.className = 'list_appareils';
+        listAppareils.textContent = appareils;
 
-        divBtnAppareils.appendChild(appareilsBtnOpen);
+        appareilsContenair.appendChild(listAppareils);
         
-        return appareilsBtnOpen;
+        return listAppareils;
     }
     return getAppareilsCardDOM;
 }

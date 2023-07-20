@@ -1,14 +1,14 @@
 export function ingredientsFactory(ingredient) {
-    const divBtnIngredients = document.querySelector('.divBtnIngredients');
+    const ingredientsContenair = document.querySelector('.ingredients_contenair');
     // Affichage liste ingrédients
     function getIngredientsCardDOM() {
-        const ingredientsBtnOpen = document.createElement('button');
-        ingredientsBtnOpen.className = 'ingredients_btn_open';
-        ingredientsBtnOpen.textContent = ingredient.ingredient;
+        const listIngredients = document.createElement('button');
+        listIngredients.className = 'list_ingredients';
+        listIngredients.textContent = ingredient.ingredient;
         
-        divBtnIngredients.appendChild(ingredientsBtnOpen);
+        ingredientsContenair.appendChild(listIngredients);
     
-        return ingredientsBtnOpen;
+        return listIngredients;
     }
     return getIngredientsCardDOM;
 }

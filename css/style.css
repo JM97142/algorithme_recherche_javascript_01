@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     padding: 0 100px;
+    margin-top: 25px;
 }
 #site-search {
     width: 100%;
@@ -30,6 +31,13 @@
 .search_icon {
     position: absolute;
     right: 7.5rem;
+}
+
+/* ERROR */
+.error_message {
+    color: red;
+    font-weight: bold;
+    padding: 0px 100px;
 }
 
 /* TAGS / INPUTS */
@@ -64,33 +72,27 @@
 .tag_ingredients {
     background-color: #3282F7;
     font-family: "Lato", Arial, sans-serif;
-    text-align: center;
     margin-right: 10px;
     color: white;
-    width: auto;
-    padding: 2% 3% 0 3%;
+    padding: 1% 2% 0 2%;
     height: 37px;
     border-radius: 5px;
 }
 .tag_appareils {
     background-color: #68D9A4;
     font-family: "Lato", Arial, sans-serif;
-    text-align: center;
     margin-right: 10px;
     color: white;
-    width: auto;
-    padding: 2% 3% 0 3%;
+    padding: 1% 2% 0 2%;
     height: 37px;
     border-radius: 5px;
 }
 .tag_ustensils {
     background-color: #ED6454;
     font-family: "Lato", Arial, sans-serif;
-    text-align: center;
     margin-right: 10px;
     color: white;
-    width: auto;
-    padding: 2% 3% 0 3%;
+    padding: 1% 2% 0 2%;
     height: 37px;
     border-radius: 5px;
 }
@@ -104,65 +106,45 @@
     display: flex;
     margin: 25px 100px 25px 100px;
 }
-.btnSearchIngredients {
-    border: none;
-    background-color: #3282F7;
-    justify-content: space-between;
-    color: white;
+.btnSearchIngredients, .btnSearchAppareils, .btnSearchUstensils {
     display: none;
+    border: none;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
     font-family: "Lato", Arial, sans-serif;
     line-height: 21.6px;
     border-radius: 5px 5px 0px 0px;
     height: 50px;
     font-size: 18px;
     padding: 10px;
-    align-items: center;
-    justify-content: space-between;
+}
+.btnSearchIngredients {
+    background-color: #3282F7;
 }
 .btnSearchAppareils {
     background-color: #68D9A4;
-    color: white;
-    display: none;
-    font-family: "Lato", Arial, sans-serif;
-    border: none;
-    line-height: 21.6px;
-    border-radius: 5px 5px 0px 0px;
-    width: auto;
-    height: 50px;
-    font-size: 18px;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
-} 
+}
 .btnSearchUstensils {
     background-color: #ED6454;
-    color: white;
-    display: none;
-    font-family: "Lato", Arial, sans-serif;
-    border: auto;
-    line-height: 21.6px;
-    border-radius: 5px 5px 0px 0px;
-    width: 647px;
-    height: 50px;
-    font-size: 18px;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
 }
-.divBtnIngredients, .divBtnAppareils, .divBtnUstensils {
+.ingredients_contenair, .appareils_contenair, .ustensils_contenair {
     display: none;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 397px;
-    margin-right: 20px;
     border-radius: 0px 0px 5px 5px;
 }
-.ingredients_btn_open, .ustensils_btn_open, .appareils_btn_open {
+.ingredients_contenair>*, .appareils_contenair>*, .ustensils_contenair>* {
+    flex: 0 0 33.33333%;
+
+}
+.list_ingredients, .list_ustensils, .list_appareils {
     font-family: "Lato", Arial, sans-serif;
     border: none;
     height: 22px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: start;
 }
 .appareils_btn_close, .ingredients_btn_close, .ustensils_btn_close {
     display: flex;
@@ -177,15 +159,15 @@
     padding: 10px;
     height: 50px;
 }
-.ingredients_btn_close, .ingredients_btn_open, .divBtnIngredients {
+.ingredients_btn_close, .list_ingredients, .ingredients_contenair {
     text-transform: capitalize;
     background-color: #3282F7;
 }
-.appareils_btn_close, .appareils_btn_open, .divBtnAppareils {
+.appareils_btn_close, .list_appareils, .appareils_contenair {
     text-transform: capitalize;
     background-color: #68D9A4;
 }
-.ustensils_btn_close, .ustensils_btn_open, .divBtnUstensils {
+.ustensils_btn_close, .list_ustensils, .ustensils_contenair {
     text-transform: capitalize;
     background-color: #ED6454;
 }
@@ -202,7 +184,7 @@
     height: 364px;
     margin-bottom: 50px;
 }
-.fiches_recipes img {
+.img_recipes {
     width: 100%;
     height: 178px;
     background-color: #C7BEBE;
@@ -217,15 +199,16 @@
     background-color: #E7E7E7;
 }
 .fiches_header h2 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
 }
 .fiches_header span {
+    margin-left: 10px;
     font-weight: bold;
 }
 .fiches_content {
     display: flex;
-    max-height: 186px;
+    height: 160px;
     justify-content: space-between;
     padding: 0 10px;
     background-color: rgb(220, 218, 218);
@@ -240,7 +223,7 @@
     flex: 2;
     font-family: "Roboto", Arial, sans-serif;
     font-size: 12px;
-    font-weight: 400;
-    width: 60%;
+    overflow: hidden;
+    height: 100px;
     text-overflow: ellipsis;
 }

@@ -7,8 +7,8 @@ export function recipesFactory(data) {
     function getRecipesCardDOM() {
         const recipesCard = document.createElement('article');
 
-        const recipesImg = document.createElement('img');
-        recipesImg.setAttribute('src', ' ');
+        const imgCard = document.createElement('div');
+        imgCard.className = 'img_recipes';
 
         const divHeader = document.createElement('div');
         divHeader.className = 'fiches_header';
@@ -16,6 +16,9 @@ export function recipesFactory(data) {
         const titleContent = document.createElement('h2');
         titleContent.textContent = name;
         
+        const divTime = document.createElement('div');
+        divTime.className = 'time_recipes';
+
         const iconTime = document.createElement('i');
         iconTime.className = 'fa-regular fa-clock';
 
@@ -57,12 +60,13 @@ export function recipesFactory(data) {
         pDescription.textContent = description;
         pDescription.className = 'content_text';
 
-        recipesCard.appendChild(recipesImg);
+        recipesCard.appendChild(imgCard);
         recipesCard.appendChild(divHeader);
         recipesCard.appendChild(divContent);
         divHeader.appendChild(titleContent);
-        divHeader.appendChild(iconTime);
-        divHeader.appendChild(timeRecipes);
+        divHeader.appendChild(divTime);
+        divTime.appendChild(iconTime);
+        divTime.appendChild(timeRecipes);
         divContent.appendChild(pIngredients);
         divContent.appendChild(pDescription);
 

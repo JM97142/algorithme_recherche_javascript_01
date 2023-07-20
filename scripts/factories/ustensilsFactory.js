@@ -1,14 +1,14 @@
 export function ustensilsFactory(ustensil) {
-    const divBtnUstensils = document.querySelector('.divBtnUstensils');
+    const ustensilsContenair = document.querySelector('.ustensils_contenair');
     // Affichage liste ustensiles
     function getUstensilsCardDOM() {
-        const ustensilsBtnOpen = document.createElement('button');
-        ustensilsBtnOpen.className = 'ustensils_btn_open';
-        ustensilsBtnOpen.textContent = ustensil;
+        const listUstensils = document.createElement('button');
+        listUstensils.className = 'list_ustensils';
+        listUstensils.textContent = ustensil;
         
-        divBtnUstensils.appendChild(ustensilsBtnOpen);
+        ustensilsContenair.appendChild(listUstensils);
         
-        return ustensilsBtnOpen;
+        return listUstensils;
     }
     return getUstensilsCardDOM;
 }
