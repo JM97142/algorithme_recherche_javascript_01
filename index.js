@@ -132,7 +132,7 @@ function onSearchAppareil(event) {
 
     const appareilsDisplayed = getAppareilsForRecipes(recipesDisplayed);
 
-    const appareilsToDisplay = appareilsDisplayed.find(appareil => appareil.toLowerCase().includes(searchTermAppareils));
+    const appareilsToDisplay = appareilsDisplayed.filter(appareil => appareil.toLowerCase().includes(searchTermAppareils));
 
     displayAppareils(appareilsToDisplay);
 }
@@ -141,7 +141,7 @@ function onSearchUstensil(event) {
 
     const ustensilsDisplayed = getUstensilsForRecipes(recipesDisplayed);
 
-    const ustensilsToDisplay = ustensilsDisplayed.find(ustensil => ustensil.toLowerCase().includes(searchTermUstensils));
+    const ustensilsToDisplay = ustensilsDisplayed.filter(ustensil => ustensil.toLowerCase().includes(searchTermUstensils));
 
     displayUstensils(ustensilsToDisplay);
 }
