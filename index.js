@@ -62,7 +62,7 @@ function isRecipeValidForSearch(recipe, searchTerm) {
 // Tags ingrédients
 function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
 
-    const foundIngredients = recipeIngredients.filter(recipeIngredient => ingredientsSelected.includes(recipeIngredient.ingredient.toLowerCase()));
+    const foundIngredients = recipeIngredients.filter(recipeIngredient => ingredientsSelected.includes(recipeIngredient.ingredient));
 
     if (foundIngredients.length === ingredientsSelected.length) {
         return true;
@@ -166,7 +166,7 @@ function onRemoveIngredientTag(ingredientName) {
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 function onIngredientsClick(event, ingredient) {
-    ingredientsSelected.push(ingredient.ingredient.toLowerCase());
+    ingredientsSelected.push(ingredient.ingredient);
     
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 

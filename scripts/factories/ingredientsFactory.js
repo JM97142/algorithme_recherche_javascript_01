@@ -4,7 +4,7 @@ export function ingredientsFactory(ingredient) {
     function getIngredientsCardDOM() {
         const listIngredients = document.createElement('button');
         listIngredients.className = 'list_ingredients';
-        listIngredients.textContent = ingredient.ingredient;
+        listIngredients.textContent = ingredient.ingredient.toLowerCase();
         
         ingredientsContenair.appendChild(listIngredients);
     
