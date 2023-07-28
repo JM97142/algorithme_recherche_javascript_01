@@ -67,7 +67,7 @@ function isRecipeValidForIngredients(recipeIngredients, ingredientsSelected) {
     let counter = 0;
 
     for (let j=0; j<recipeIngredients.length; j++) {
-        const recipeIngredient = recipeIngredients[j].ingredient.toLowerCase();
+        const recipeIngredient = recipeIngredients[j].ingredient;
 
         if (ingredientsSelected.includes(recipeIngredient)) {
             counter = counter + 1;
@@ -159,6 +159,7 @@ function onSearchAppareil(event) {
     const searchTermAppareils = event.target.value.toLowerCase();
 
     const appareilsDisplayed = getAppareilsForRecipes(recipesDisplayed);
+    
     for (let i=0; i<appareilsDisplayed.length; i++) {
         const appareil = appareilsDisplayed[i].toLowerCase();
         
@@ -176,7 +177,7 @@ function onSearchUstensil(event) {
 
     for (let i=0; i<ustensilsDisplayed.length; i++) {
         const ustensil = ustensilsDisplayed[i].toLowerCase();
-        console.log(ustensil);
+
         if (ustensil.includes(searchTermUstensils)) {
             ustensilsToDisplay.push(ustensil);
         }
@@ -197,7 +198,6 @@ function createIngredientTag(ingredient) {
 }
 function onRemoveIngredientTag(ingredientName) {
     ingredientsSelected = ingredientsSelected.filter(ingredientSelected => ingredientSelected !== ingredientName);
-    console.log(ingredientsSelected);
 
     const tag = document.getElementById(ingredientName);
     tag.remove();
@@ -205,7 +205,7 @@ function onRemoveIngredientTag(ingredientName) {
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 }
 function onIngredientsClick(event, ingredient) {
-    ingredientsSelected.push(ingredient.ingredient.toLowerCase());
+    ingredientsSelected.push(ingredient.ingredient);
     
     getRecipesForSearch(searchTerm, ingredientsSelected, appareilsSelected, ustensilsSelected);
 

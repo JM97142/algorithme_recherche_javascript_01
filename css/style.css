@@ -139,6 +139,8 @@
 }
 .list_ingredients, .list_ustensils, .list_appareils {
     font-family: "Lato", Arial, sans-serif;
+    text-align: start;
+    text-transform: capitalize;
     border: none;
     height: 22px;
     color: white;
