@@ -1,5 +1,5 @@
 # Les Petits Plats
-> Développez un algorithme de recherche en JavaScript
+> Projet Openclassrooms 7 - Développez un algorithme de recherche en JavaScript
 
 ## Resources provided
 
